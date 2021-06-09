@@ -3,16 +3,17 @@ from selenium import webdriver
 import unittest
 import time 
 from selenium.webdriver.common.keys import Keys
+from django.test import LiveServerTestCase
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
     '''тест нового посетителя'''
 
     def setUp(self): 
         '''установка'''
         self.browser = webdriver.Firefox()
-    # def tearDown(self): 
-    #     '''демонтаж'''
-    #     self.browser.quit()
+    def tearDown(self): 
+        '''демонтаж'''
+        self.browser.quit()
 
     def check_for_row_in_list_table(self, row_text):
         '''подтверждение строки в таблице списка'''
@@ -24,7 +25,7 @@ class NewVisitorTest(unittest.TestCase):
         '''тест: можно начать список и получить его позже'''
         # Эдит слышала про крутое новое онлайн-приложение со списком
         # неотложных дел. Она решает оценить его домашнюю страницу
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
         # Она видит, что заголовок и шапка страницы говорят о списках
         # неотложных дел
         self.assertIn('To-Do', self.browser.title)
@@ -61,5 +62,3 @@ class NewVisitorTest(unittest.TestCase):
         
         self.fail('Закончить тест!')
 
-if __name__ == '__main__': 
-    unittest.main()
