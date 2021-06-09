@@ -20,5 +20,9 @@ from lists import views
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
+    path('lists/<int:pk>/', views.ListViewView.as_view(), name='view_list'),
+    path('lists/add_item/<int:pk>/', views.AddItemView.as_view(), name='new_list'),
     url(r'^$', views.HomePageView.as_view(), name='home'),
+    url(r'^lists/new$', views.NewListView.as_view(), name="new_list"),
+    
 ]
